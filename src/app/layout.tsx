@@ -7,6 +7,14 @@ import React from 'react'
 export const metadata: Metadata = {
   title: 'Portfolio Dashboard',
   description: 'Solana Portfolio Management',
+  keywords: ['Solana', 'Portfolio', 'Cryptocurrency', 'Wallet', 'DeFi', 'Web3'],
+  authors: [{ name: 'Third Time' }],
+  robots: 'index, follow',
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 const links: { label: string; path: string }[] = [{ label: 'Home', path: '/' }]

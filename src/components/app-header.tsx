@@ -7,6 +7,8 @@ import { Menu, X } from 'lucide-react'
 import { ThemeSelect } from '@/components/theme-select'
 import { ClusterButton, WalletButton } from '@/components/solana/solana-provider'
 
+import Image from 'next/image'
+
 export function AppHeader({ links = [] }: { links: { label: string; path: string }[] }) {
   const pathname = usePathname()
   const [showMenu, setShowMenu] = useState(false)
@@ -19,7 +21,11 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
     <header className="relative z-50 px-4 py-2 bg-neutral-100 dark:bg-neutral-900 dark:text-neutral-400">
       <div className="mx-auto flex justify-between items-center">
         <div className="flex items-baseline gap-4">
-          <Link className="text-xl hover:text-neutral-500 dark:hover:text-white" href="/">
+          <Image src="/third-time-icon-tiny-white.png" alt="Third Time Logo" width={20} height={20} priority />
+          <Link
+            href="/"
+            className="flex items-center text-xl font-bold hover:text-neutral-500 dark:hover:text-white gap-2 cursor-pointer transition-colors duration-200"
+          >
             <span>Portfolio Dashboard</span>
           </Link>
           <div className="hidden md:flex items-center">
@@ -27,7 +33,7 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
               {links.map(({ label, path }) => (
                 <li key={path}>
                   <Link
-                    className={`hover:text-neutral-500 dark:hover:text-white ${isActive(path) ? 'text-neutral-500 dark:text-white' : ''}`}
+                    className={`hover:text-neutral-500 dark:hover:text-white cursor-pointer transition-colors duration-200 ${isActive(path) ? 'text-neutral-500 dark:text-white' : ''}`}
                     href={path}
                   >
                     {label}
@@ -38,7 +44,13 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
           </div>
         </div>
 
-        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setShowMenu(!showMenu)}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden cursor-pointer hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors duration-200"
+          onClick={() => setShowMenu(!showMenu)}
+          aria-label={showMenu ? 'Close menu' : 'Open menu'}
+        >
           {showMenu ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </Button>
 
@@ -49,13 +61,19 @@ export function AppHeader({ links = [] }: { links: { label: string; path: string
         </div>
 
         {showMenu && (
-          <div className="md:hidden fixed inset-x-0 top-[52px] bottom-0 bg-neutral-100/95 dark:bg-neutral-900/95 backdrop-blur-sm">
-            <div className="flex flex-col p-4 gap-4 border-t dark:border-neutral-800">
+          <div
+            className="md:hidden fixed inset-x-0 top-[52px] bottom-0 bg-neutral-100/95 dark:bg-neutral-900/95 backdrop-blur-sm z-40"
+            onClick={() => setShowMenu(false)}
+          >
+            <div
+              className="flex flex-col p-4 gap-4 border-t dark:border-neutral-800"
+              onClick={(e) => e.stopPropagation()}
+            >
               <ul className="flex flex-col gap-4">
                 {links.map(({ label, path }) => (
                   <li key={path}>
                     <Link
-                      className={`hover:text-neutral-500 dark:hover:text-white block text-lg py-2  ${isActive(path) ? 'text-neutral-500 dark:text-white' : ''} `}
+                      className={`hover:text-neutral-500 dark:hover:text-white block text-lg py-2 cursor-pointer transition-colors duration-200 ${isActive(path) ? 'text-neutral-500 dark:text-white' : ''} `}
                       href={path}
                       onClick={() => setShowMenu(false)}
                     >
